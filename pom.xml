@@ -11,9 +11,9 @@
 	</parent>
 	<groupId>com.banquito.core</groupId>
 	<artifactId>products</artifactId>
-	<version>1.0</version>
+	<version>V1.0</version>
 	<name>products</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Products APIs REST</description>
 	<properties>
 		<java.version>21</java.version>
 	</properties>
