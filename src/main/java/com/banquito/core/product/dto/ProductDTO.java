@@ -9,7 +9,9 @@ import lombok.Value;
 @Value
 @Builder
 public class ProductDTO {
-    private String codeInterestRate;
+    private String code; // Mapped from pk.code
+    private String codeProductType; // Mapped from pk.codeProductType
+    private String codeInterestRate; // Mapped from interestRate.code
     private String codeSegment;
     private String name;
     private String state;
@@ -18,5 +20,4 @@ public class ProductDTO {
     private String allowDebitCard;
     private String allowTransferences;
     private BigDecimal minOpeningBalance;
-    private String codeProductType;
 }
