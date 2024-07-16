@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/product-types")
+@RequestMapping("/api/v1/product-types")
 public class ProductTypeController {
 
     private final ProductTypeService productTypeService;

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/interest-rates")
+@RequestMapping("/api/v1/interest-rates")
 public class InterestRateController {
 
     private final InterestRateService interestRateService;
