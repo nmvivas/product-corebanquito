@@ -16,4 +16,3 @@ public interface ProductTypeMapper {
     @Mapping(target = "code", source = "code")
     ProductType toProductType(ProductTypeDTO productTypeDTO);
 }
-

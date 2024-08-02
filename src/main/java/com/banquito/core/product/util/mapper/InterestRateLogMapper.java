@@ -14,7 +14,6 @@ public interface InterestRateLogMapper {
     @Mapping(source = "codeInterestRate", target = "interestRate.code")
     InterestRateLogDTO toInterestRateLogDTO(InterestRateLog interestRateLog);
 
-    @Mapping(target = "interestRate", ignore = true) // Add appropriate mapping if necessary
+    @Mapping(target = "interestRate", ignore = true)
     InterestRateLog toInterestRateLog(InterestRateLogDTO interestRateLogDTO);
 }
-

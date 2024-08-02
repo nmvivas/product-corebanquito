@@ -21,5 +21,3 @@ public interface ProductMapper {
     @Mapping(target = "interestRate", ignore = true)
     Product toProduct(ProductDTO productDTO);
 }
-
-
