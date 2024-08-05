@@ -6,14 +6,17 @@ import org.springframework.stereotype.Service;
 
 import com.banquito.core.product.model.ProductType;
 import com.banquito.core.product.repository.ProductTypeRepository;
+import com.banquito.core.product.util.UniqueIdGeneration;
 
 @Service
 public class ProductTypeService {
 
     private final ProductTypeRepository productTypeRepository;
+    private final UniqueIdGeneration uniqueIdGeneration;
 
-    public ProductTypeService(ProductTypeRepository productTypeRepository) {
+    public ProductTypeService(ProductTypeRepository productTypeRepository, UniqueIdGeneration uniqueIdGeneration) {
         this.productTypeRepository = productTypeRepository;
+        this.uniqueIdGeneration = uniqueIdGeneration;
     }
 
     public List<ProductType> getAllProductTypes() {
@@ -25,6 +28,9 @@ public class ProductTypeService {
     }
 
     public ProductType saveProductType(ProductType productType) {
+        if (productType.getUniqueId() == null || productType.getUniqueId().isEmpty()) {
+            productType.setUniqueId(uniqueIdGeneration.generateUniqueId());
+        }
         return productTypeRepository.save(productType);
     }
 

@@ -6,14 +6,17 @@ import org.springframework.stereotype.Service;
 
 import com.banquito.core.product.model.InterestRate;
 import com.banquito.core.product.repository.InterestRateRepository;
+import com.banquito.core.product.util.UniqueIdGeneration;
 
 @Service
 public class InterestRateService {
 
     private final InterestRateRepository interestRateRepository;
+    private final UniqueIdGeneration uniqueIdGeneration;
 
-    public InterestRateService(InterestRateRepository interestRateRepository) {
+    public InterestRateService(InterestRateRepository interestRateRepository, UniqueIdGeneration uniqueIdGeneration) {
         this.interestRateRepository = interestRateRepository;
+        this.uniqueIdGeneration = uniqueIdGeneration;
     }
 
     public List<InterestRate> getAllInterestRates() {
@@ -25,6 +28,9 @@ public class InterestRateService {
     }
 
     public InterestRate saveInterestRate(InterestRate interestRate) {
+        if (interestRate.getUniqueId() == null || interestRate.getUniqueId().isEmpty()) {
+            interestRate.setUniqueId(uniqueIdGeneration.generateUniqueId());
+        }
         return interestRateRepository.save(interestRate);
     }
 
