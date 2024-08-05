@@ -1,10 +1,11 @@
 package com.banquito.core.product.service;
 
-import com.banquito.core.product.model.InterestRate;
-import com.banquito.core.product.repository.InterestRateRepository;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.banquito.core.product.model.InterestRate;
+import com.banquito.core.product.repository.InterestRateRepository;
 
 @Service
 public class InterestRateService {
@@ -19,15 +20,15 @@ public class InterestRateService {
         return interestRateRepository.findAll();
     }
 
-    public InterestRate getInterestRateById(String code) {
-        return interestRateRepository.findById(code).orElse(null);
+    public InterestRate getInterestRateByUniqueId(String uniqueId) {
+        return interestRateRepository.findByUniqueId(uniqueId).orElse(null);
     }
 
     public InterestRate saveInterestRate(InterestRate interestRate) {
         return interestRateRepository.save(interestRate);
     }
 
-    public void deleteInterestRate(String code) {
-        interestRateRepository.deleteById(code);
+    public void deleteInterestRate(String uniqueId) {
+        interestRateRepository.deleteByUniqueId(uniqueId);
     }
 }

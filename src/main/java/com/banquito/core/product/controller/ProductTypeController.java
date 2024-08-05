@@ -1,7 +1,6 @@
 package com.banquito.core.product.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,14 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.banquito.core.product.dto.ProductTypeDTO;
+import com.banquito.core.product.model.ProductType;
 import com.banquito.core.product.service.ProductTypeService;
-import com.banquito.core.product.util.mapper.ProductTypeMapper;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
 @RestController
 @RequestMapping("/product-microservice/api/v1/product-type")
 @Tag(name = "ProductType Management System", description = "Operations pertaining to product types in ProductType Management System")
@@ -35,44 +33,32 @@ public class ProductTypeController {
 
     @Operation(summary = "View a list of available product types", description = "Get a list of all product types")
     @GetMapping
-    public List<ProductTypeDTO> getAllProductTypes() {
-        return productTypeService.getAllProductTypes().stream()
-                .map(ProductTypeMapper.INSTANCE::toProductTypeDTO)
-                .collect(Collectors.toList());
+    public List<ProductType> getAllProductTypes() {
+        return productTypeService.getAllProductTypes();
     }
 
-    @Operation(summary = "Get a product type by Id", description = "Get a single product type by its ID")
-    @GetMapping("/{id}")
-    public ProductTypeDTO getProductTypeById(@PathVariable("id") String code) {
-        return ProductTypeMapper.INSTANCE.toProductTypeDTO(productTypeService.getProductTypeById(code));
+    @Operation(summary = "Get a product type by uniqueId", description = "Get a single product type by its uniqueId")
+    @GetMapping("/{uniqueId}")
+    public ProductType getProductTypeByUniqueId(@PathVariable("uniqueId") String uniqueId) {
+        return productTypeService.getProductTypeByUniqueId(uniqueId);
     }
 
     @Operation(summary = "Add a product type", description = "Create a new product type")
     @PostMapping
-    public ProductTypeDTO createProductType(@RequestBody ProductTypeDTO productTypeDTO) {
-        return ProductTypeMapper.INSTANCE.toProductTypeDTO(
-                productTypeService.saveProductType(ProductTypeMapper.INSTANCE.toProductType(productTypeDTO)));
+    public ProductType createProductType(@RequestBody ProductType productType) {
+        return productTypeService.saveProductType(productType);
     }
 
     @Operation(summary = "Update a product type", description = "Update an existing product type")
-    @PutMapping("/{id}")
-    public ProductTypeDTO updateProductType(@PathVariable("id") String code,
-            @RequestBody ProductTypeDTO productTypeDTO) {
-        ProductTypeDTO updatedDTO = ProductTypeDTO.builder()
-                .code(code)
-                .name(productTypeDTO.getName())
-                .clientType(productTypeDTO.getClientType())
-                .allowEarnInterest(productTypeDTO.getAllowEarnInterest())
-                .temporalityInterest(productTypeDTO.getTemporalityInterest())
-                .build();
-
-        return ProductTypeMapper.INSTANCE.toProductTypeDTO(
-                productTypeService.saveProductType(ProductTypeMapper.INSTANCE.toProductType(updatedDTO)));
+    @PutMapping("/{uniqueId}")
+    public ProductType updateProductType(@PathVariable("uniqueId") String uniqueId, @RequestBody ProductType productType) {
+        productType.setUniqueId(uniqueId);
+        return productTypeService.saveProductType(productType);
     }
 
-    @Operation(summary = "Delete a product type", description = "Delete an existing product type by its ID")
-    @DeleteMapping("/{id}")
-    public void deleteProductType(@PathVariable("id") String code) {
-        productTypeService.deleteProductType(code);
+    @Operation(summary = "Delete a product type", description = "Delete an existing product type by its uniqueId")
+    @DeleteMapping("/{uniqueId}")
+    public void deleteProductType(@PathVariable("uniqueId") String uniqueId) {
+        productTypeService.deleteProductType(uniqueId);
     }
 }

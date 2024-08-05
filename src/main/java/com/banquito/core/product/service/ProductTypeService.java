@@ -1,10 +1,11 @@
 package com.banquito.core.product.service;
 
-import com.banquito.core.product.model.ProductType;
-import com.banquito.core.product.repository.ProductTypeRepository;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.banquito.core.product.model.ProductType;
+import com.banquito.core.product.repository.ProductTypeRepository;
 
 @Service
 public class ProductTypeService {
@@ -19,15 +20,15 @@ public class ProductTypeService {
         return productTypeRepository.findAll();
     }
 
-    public ProductType getProductTypeById(String code) {
-        return productTypeRepository.findById(code).orElse(null);
+    public ProductType getProductTypeByUniqueId(String uniqueId) {
+        return productTypeRepository.findByUniqueId(uniqueId).orElse(null);
     }
 
     public ProductType saveProductType(ProductType productType) {
         return productTypeRepository.save(productType);
     }
 
-    public void deleteProductType(String code) {
-        productTypeRepository.deleteById(code);
+    public void deleteProductType(String uniqueId) {
+        productTypeRepository.deleteByUniqueId(uniqueId);
     }
 }
