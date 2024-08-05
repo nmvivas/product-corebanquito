@@ -24,6 +24,9 @@ public class InterestRate implements Serializable {
     @Column(name = "CODE_INTEREST_RATE", length = 10, nullable = false)
     private String code;
 
+    @Column(name = "UNIQUE_ID", length = 30, nullable = false)
+    private String uniqueId;
+
     @Column(name = "NAME", length = 100, nullable = false)
     private String name;
 

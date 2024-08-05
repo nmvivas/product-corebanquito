@@ -32,6 +32,9 @@ public class InterestRateLog implements Serializable {
     @Column(name = "INTEREST_LOG_ID", nullable = false)
     private Integer id;
 
+    @Column(name = "UNIQUE_ID", length = 10, nullable = false)
+    private String uniqueId;
+
     @Column(name = "CODE_INTEREST_RATE", length = 8, nullable = false)
     private String codeInterestRate;
 

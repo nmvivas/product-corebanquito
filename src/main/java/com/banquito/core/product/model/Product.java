@@ -26,6 +26,9 @@ public class Product implements Serializable {
     @EmbeddedId
     private ProductPK pk;
 
+    @Column(name = "UNIQUE_ID", length = 30, nullable = false)
+    private String uniqueId;
+
     @Column(name = "CODE_INTEREST_RATE", length = 10, nullable = false)
     private String codeInterestRate;
 
@@ -66,6 +69,7 @@ public class Product implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((pk == null) ? 0 : pk.hashCode());
+        result = prime * result + ((uniqueId == null) ? 0 : uniqueId.hashCode());
         return result;
     }
 
@@ -83,6 +87,13 @@ public class Product implements Serializable {
                 return false;
         } else if (!pk.equals(other.pk))
             return false;
+        if (uniqueId == null) {
+            if (other.uniqueId != null)
+                return false;
+        } else if (!uniqueId.equals(other.uniqueId))
+            return false;
         return true;
     }
+
+
 }

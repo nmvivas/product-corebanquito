@@ -23,11 +23,14 @@ public class ProductType implements Serializable {
     @Column(name = "CODE_PRODUCT_TYPE", length = 20, nullable = false)
     private String code;
 
+    @Column(name = "UNIQUE_ID", length = 20, nullable = false)
+    private String uniqueId;
+
     @Column(name = "NAME", length = 100, nullable = false)
     private String name;
 
-    @Column(name = "CLIENT_TYPE", length = 3, nullable = false)
-    private String clientType;
+    @Column(name = "PRODUCT_TYPE", length = 3, nullable = false)
+    private String productType;
 
     @Column(name = "ALLOW_EARN_INTEREST", length = 1, nullable = false)
     private String allowEarnInterest;
@@ -40,6 +43,7 @@ public class ProductType implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((code == null) ? 0 : code.hashCode());
+        result = prime * result + ((uniqueId == null) ? 0 : uniqueId.hashCode());
         return result;
     }
 
@@ -56,6 +60,11 @@ public class ProductType implements Serializable {
             if (other.code != null)
                 return false;
         } else if (!code.equals(other.code))
+            return false;
+        if (uniqueId == null) {
+            if (other.uniqueId != null)
+                return false;
+        } else if (!uniqueId.equals(other.uniqueId))
             return false;
         return true;
     }
