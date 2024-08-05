@@ -50,7 +50,7 @@ public class Product implements Serializable {
     @Column(name = "ALLOW_DEBIT_CARD", length = 1)
     private String allowDebitCard;
 
-    @Column(name = "ALOOW_TRANSFERENCES", length = 1)
+    @Column(name = "ALLOW_TRANSFERENCES", length = 1)
     private String allowTransferences;
 
     @Column(name = "MIN_OPENING_BALANCE", precision = 17, scale = 2, nullable = false)
