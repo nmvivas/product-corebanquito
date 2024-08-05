@@ -35,10 +35,6 @@ public class ProductType implements Serializable {
     @Column(name = "TEMPORALITY_INTEREST", length = 3)
     private String temporalityInterest;
 
-    public ProductType(String code) {
-        this.code = code;
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;

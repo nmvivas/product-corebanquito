@@ -1,7 +1,6 @@
 package com.banquito.core.product.util.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import com.banquito.core.product.dto.InterestRateDTO;
@@ -13,6 +12,5 @@ public interface InterestRateMapper {
 
     InterestRateDTO toInterestRateDTO(InterestRate interestRate);
 
-    @Mapping(target = "code", source = "code")
     InterestRate toInterestRate(InterestRateDTO interestRateDTO);
 }

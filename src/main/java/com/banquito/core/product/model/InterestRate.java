@@ -36,10 +36,6 @@ public class InterestRate implements Serializable {
     @Column(name = "DAYS_IN_YEAR", precision = 3, nullable = false)
     private BigDecimal daysInYear;
 
-    public InterestRate(String code) {
-        this.code = code;
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;

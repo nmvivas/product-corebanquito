@@ -61,10 +61,6 @@ public class Product implements Serializable {
     @JoinColumn(name = "CODE_INTEREST_RATE", referencedColumnName = "CODE_INTEREST_RATE", insertable = false, updatable = false)
     private InterestRate interestRate;
 
-    public Product(ProductPK pk) {
-        this.pk = pk;
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;

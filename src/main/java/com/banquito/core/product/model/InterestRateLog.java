@@ -52,11 +52,7 @@ public class InterestRateLog implements Serializable {
     @ManyToOne
     @JoinColumn(name = "CODE_INTEREST_RATE", referencedColumnName = "CODE_INTEREST_RATE", insertable = false, updatable = false)
     private InterestRate interestRate;
-
-    public InterestRateLog(Integer id) {
-        this.id = id;
-    }
-
+    
     @Override
     public int hashCode() {
         final int prime = 31;
