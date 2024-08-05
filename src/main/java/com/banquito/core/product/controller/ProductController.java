@@ -20,10 +20,13 @@ import com.banquito.core.product.model.ProductPK;
 import com.banquito.core.product.service.ProductService;
 import com.banquito.core.product.util.mapper.ProductMapper;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*", methods = { RequestMethod.GET, RequestMethod.POST,
-        RequestMethod.PUT })
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 @RestController
-@RequestMapping("/api/v1/product")
+@RequestMapping("/product-microservice/api/v1/product")
+@Tag(name = "Product Management System", description = "Operations pertaining to products in Product Management System")
 public class ProductController {
 
     private final ProductService productService;
@@ -32,6 +35,7 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @Operation(summary = "View a list of available products", description = "Get a list of all products")
     @GetMapping
     public List<ProductDTO> getAllProducts() {
         return productService.getAllProducts().stream()
@@ -39,18 +43,21 @@ public class ProductController {
                 .collect(Collectors.toList());
     }
 
+    @Operation(summary = "Get a product by Id", description = "Get a single product by its ID")
     @GetMapping("/{codeProductType}/{code}")
     public ProductDTO getProductById(@PathVariable String codeProductType, @PathVariable String code) {
         ProductPK pk = new ProductPK(codeProductType, code);
         return ProductMapper.INSTANCE.toProductDTO(productService.getProductById(pk));
     }
 
+    @Operation(summary = "Add a product", description = "Create a new product")
     @PostMapping
     public ProductDTO createProduct(@RequestBody ProductDTO productDTO) {
         return ProductMapper.INSTANCE.toProductDTO(
                 productService.saveProduct(ProductMapper.INSTANCE.toProduct(productDTO)));
     }
 
+    @Operation(summary = "Update a product", description = "Update an existing product")
     @PutMapping("/{codeProductType}/{code}")
     public ProductDTO updateProduct(@PathVariable String codeProductType, @PathVariable String code,
             @RequestBody ProductDTO productDTO) {
@@ -61,6 +68,7 @@ public class ProductController {
                 productService.saveProduct(product));
     }
 
+    @Operation(summary = "Delete a product", description = "Delete an existing product by its ID")
     @DeleteMapping("/{codeProductType}/{code}")
     public void deleteProduct(@PathVariable String codeProductType, @PathVariable String code) {
         ProductPK pk = new ProductPK(codeProductType, code);

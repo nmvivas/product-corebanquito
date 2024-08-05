@@ -18,10 +18,13 @@ import com.banquito.core.product.dto.ProductTypeDTO;
 import com.banquito.core.product.service.ProductTypeService;
 import com.banquito.core.product.util.mapper.ProductTypeMapper;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*", methods = { RequestMethod.GET, RequestMethod.POST,
-        RequestMethod.PUT })
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 @RestController
-@RequestMapping("/api/v1/product-type")
+@RequestMapping("/product-microservice/api/v1/product-type")
+@Tag(name = "ProductType Management System", description = "Operations pertaining to product types in ProductType Management System")
 public class ProductTypeController {
 
     private final ProductTypeService productTypeService;
@@ -30,6 +33,7 @@ public class ProductTypeController {
         this.productTypeService = productTypeService;
     }
 
+    @Operation(summary = "View a list of available product types", description = "Get a list of all product types")
     @GetMapping
     public List<ProductTypeDTO> getAllProductTypes() {
         return productTypeService.getAllProductTypes().stream()
@@ -37,21 +41,23 @@ public class ProductTypeController {
                 .collect(Collectors.toList());
     }
 
+    @Operation(summary = "Get a product type by Id", description = "Get a single product type by its ID")
     @GetMapping("/{id}")
     public ProductTypeDTO getProductTypeById(@PathVariable("id") String code) {
         return ProductTypeMapper.INSTANCE.toProductTypeDTO(productTypeService.getProductTypeById(code));
     }
 
+    @Operation(summary = "Add a product type", description = "Create a new product type")
     @PostMapping
     public ProductTypeDTO createProductType(@RequestBody ProductTypeDTO productTypeDTO) {
         return ProductTypeMapper.INSTANCE.toProductTypeDTO(
                 productTypeService.saveProductType(ProductTypeMapper.INSTANCE.toProductType(productTypeDTO)));
     }
 
+    @Operation(summary = "Update a product type", description = "Update an existing product type")
     @PutMapping("/{id}")
     public ProductTypeDTO updateProductType(@PathVariable("id") String code,
             @RequestBody ProductTypeDTO productTypeDTO) {
-        // Since DTOs are immutable, recreate the DTO with the code
         ProductTypeDTO updatedDTO = ProductTypeDTO.builder()
                 .code(code)
                 .name(productTypeDTO.getName())
@@ -64,6 +70,7 @@ public class ProductTypeController {
                 productTypeService.saveProductType(ProductTypeMapper.INSTANCE.toProductType(updatedDTO)));
     }
 
+    @Operation(summary = "Delete a product type", description = "Delete an existing product type by its ID")
     @DeleteMapping("/{id}")
     public void deleteProductType(@PathVariable("id") String code) {
         productTypeService.deleteProductType(code);

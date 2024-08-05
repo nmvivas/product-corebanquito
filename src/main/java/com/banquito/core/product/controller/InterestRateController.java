@@ -18,10 +18,13 @@ import com.banquito.core.product.dto.InterestRateDTO;
 import com.banquito.core.product.service.InterestRateService;
 import com.banquito.core.product.util.mapper.InterestRateMapper;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*", methods = { RequestMethod.GET, RequestMethod.POST,
-        RequestMethod.PUT })
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 @RestController
-@RequestMapping("/api/v1/interest-rate")
+@RequestMapping("/product-microservice/api/v1/interest-rate")
+@Tag(name = "InterestRate Management System", description = "Operations pertaining to interest rates in InterestRate Management System")
 public class InterestRateController {
 
     private final InterestRateService interestRateService;
@@ -30,6 +33,7 @@ public class InterestRateController {
         this.interestRateService = interestRateService;
     }
 
+    @Operation(summary = "View a list of available interest rates", description = "Get a list of all interest rates")
     @GetMapping
     public List<InterestRateDTO> getAllInterestRates() {
         return interestRateService.getAllInterestRates().stream()
@@ -37,21 +41,23 @@ public class InterestRateController {
                 .collect(Collectors.toList());
     }
 
+    @Operation(summary = "Get an interest rate by Id", description = "Get a single interest rate by its ID")
     @GetMapping("/{id}")
     public InterestRateDTO getInterestRateById(@PathVariable("id") String code) {
         return InterestRateMapper.INSTANCE.toInterestRateDTO(interestRateService.getInterestRateById(code));
     }
 
+    @Operation(summary = "Add an interest rate", description = "Create a new interest rate")
     @PostMapping
     public InterestRateDTO createInterestRate(@RequestBody InterestRateDTO interestRateDTO) {
         return InterestRateMapper.INSTANCE.toInterestRateDTO(
                 interestRateService.saveInterestRate(InterestRateMapper.INSTANCE.toInterestRate(interestRateDTO)));
     }
 
+    @Operation(summary = "Update an interest rate", description = "Update an existing interest rate")
     @PutMapping("/{id}")
     public InterestRateDTO updateInterestRate(@PathVariable("id") String code,
             @RequestBody InterestRateDTO interestRateDTO) {
-        // Since DTOs are immutable, recreate the DTO with the code
         InterestRateDTO updatedDTO = InterestRateDTO.builder()
                 .code(code)
                 .name(interestRateDTO.getName())
@@ -64,6 +70,7 @@ public class InterestRateController {
                 interestRateService.saveInterestRate(InterestRateMapper.INSTANCE.toInterestRate(updatedDTO)));
     }
 
+    @Operation(summary = "Delete an interest rate", description = "Delete an existing interest rate by its ID")
     @DeleteMapping("/{id}")
     public void deleteInterestRate(@PathVariable("id") String code) {
         interestRateService.deleteInterestRate(code);
