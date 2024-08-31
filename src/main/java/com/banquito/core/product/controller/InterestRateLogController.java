@@ -2,6 +2,7 @@ package com.banquito.core.product.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.banquito.core.product.model.InterestRateLog;
@@ -45,6 +47,7 @@ public class InterestRateLogController {
 
     @Operation(summary = "Add an interest rate log", description = "Create a new interest rate log")
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public InterestRateLog createInterestRateLog(@RequestBody InterestRateLog interestRateLog) {
         return interestRateLogService.saveInterestRateLog(interestRateLog);
     }
@@ -58,6 +61,7 @@ public class InterestRateLogController {
 
     @Operation(summary = "Delete an interest rate log", description = "Delete an existing interest rate log by its uniqueId")
     @DeleteMapping("/{uniqueId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteInterestRateLog(@PathVariable("uniqueId") String uniqueId) {
         interestRateLogService.deleteInterestRateLog(uniqueId);
     }
