@@ -1,25 +1,20 @@
 package com.banquito.core.product.config;
 
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.ehcache.EhCacheCacheManager;
-import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
+import org.springframework.cache.jcache.JCacheCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
+
+import javax.cache.Caching;
+import javax.cache.CacheManager;
 
 @Configuration
 @EnableCaching
 public class CacheConfig {
 
     @Bean
-    public EhCacheManagerFactoryBean ehCacheManagerFactoryBean() {
-        EhCacheManagerFactoryBean factoryBean = new EhCacheManagerFactoryBean();
-        factoryBean.setConfigLocation(new ClassPathResource("ehcache.xml"));
-        return factoryBean;
-    }
-
-    @Bean
-    public EhCacheCacheManager cacheManager() {
-        return new EhCacheCacheManager(ehCacheManagerFactoryBean().getObject());
+    public JCacheCacheManager cacheManager() {
+        CacheManager cacheManager = Caching.getCachingProvider().getCacheManager();
+        return new JCacheCacheManager(cacheManager);
     }
 }
