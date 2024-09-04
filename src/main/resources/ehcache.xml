@@ -1,0 +1,11 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.ehcache.org/v3"
+        xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/v3/schema/ehcache-v3.xsd">
+
+    <cache alias="products">
+        <key-type>java.lang.String</key-type>
+        <value-type>com.banquito.core.product.domain.Product</value-type>
+        <heap unit="entries">1000</heap>
+    </cache>
+    <!-- Configuración adicional para otros caches -->
+</config>
