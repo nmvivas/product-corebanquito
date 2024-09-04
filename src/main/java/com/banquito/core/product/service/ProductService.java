@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
 import com.banquito.core.product.model.Product;
@@ -31,7 +32,7 @@ public class ProductService {
         return productRepository.findByUniqueId(uniqueId).orElse(null);
     }
 
-    @CacheEvict(value = "products", allEntries = true)
+    @CachePut(value = "products", key = "#product.uniqueId")
     public Product saveProduct(Product product) {
         if (product.getUniqueId() == null || product.getUniqueId().isEmpty()) {
             product.setUniqueId(uniqueIdGeneration.generateUniqueId());
@@ -39,7 +40,7 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    @CacheEvict(value = "products", allEntries = true)
+    @CacheEvict(value = "products", key = "#uniqueId")
     public void deleteProduct(String uniqueId) {
         productRepository.deleteByUniqueId(uniqueId);
     }
