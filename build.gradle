@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.banquito.core'
-version = 'V1'
+version = 'V2'
 
 java {
 	toolchain {
